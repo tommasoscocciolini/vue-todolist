@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./master.css">
+  <title>ToDo List</title>
+</head>
+<body>
+  <div id="root">
+    <div class="container">
+      <h1>ToDO List</h1>
+      <ul>
+        <li v-for="todo in todosComputed">
+          <span class="title" :class="(todo.status=='done') ? 'done' : ''">{{todo.title}}</span>
+          <span @click="edit(todo)" v-if="todo.status == 'todo' || todo.status =='editing'" class="edit"><i class="far fa-edit"></i> </span>
+          <span @click="check(todo)" v-if="todo.status != 'done'" class="check"><i class="fas fa-check"></i> </span>
+          <span @click="remove(todo)" v-if="todo.status == 'done'" class=""><i class="fas fa-trash"></i> </span>
+
+          <input v-model="editedTodo" @keyup.enter="fastEdit(todo)" type="text" v-if="todo.status == 'editing'">
+        </li>
+      </ul>
+      <span class="testo">Add To-do</span>
+      <input v-model="newTodo" @keyup.enter="addTodo()" class="testo" type="text" placeholder="new to-do">
+
+      <div class="todo-removed">
+        <button @click="btnCheck" type="button" name="button" style="margin-top: 20px;">Click to toggle history</button>
+        <div
+        v-if="statusBtn == 'clicked'">
+          <div v-for="(removed, i) in remArray">
+          {{remArray[i]}}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script src="main.js" charset="utf-8"></script>
+</body>
+</html>
